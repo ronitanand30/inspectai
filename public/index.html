@@ -274,12 +274,23 @@
   function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-  function handlePdf(files) {
+  async function handlePdf(files) {
     const file = files[0]; if (!file) return;
-    document.getElementById('pdf-chip-wrap').innerHTML = `<div class="file-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8z"/></svg>&nbsp;${esc(file.name)}<button onclick="removePdf()">×</button></div>`;
-    const reader = new FileReader();
-    reader.onload = e => { pdfText = e.target.result; };
-    reader.readAsText(file);
+    const chipWrap = document.getElementById('pdf-chip-wrap');
+    chipWrap.innerHTML = `<div class="file-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8z"/></svg>&nbsp;${esc(file.name)} — reading...</div>`;
+    try {
+      const formData = new FormData();
+      formData.append('pdf', file);
+      const res = await fetch('/api/parse-pdf', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not read PDF');
+      pdfText = data.text;
+      chipWrap.innerHTML = `<div class="file-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8z"/></svg>&nbsp;${esc(file.name)} (ready)<button onclick="removePdf()">x</button></div>`;
+    } catch(e) {
+      chipWrap.innerHTML = '';
+      document.getElementById('err-msg').textContent = 'PDF error: ' + e.message;
+      document.getElementById('err-msg').style.display = 'block';
+    }
   }
   function removePdf() { pdfText = ''; document.getElementById('pdf-chip-wrap').innerHTML = ''; document.getElementById('pdf-file').value = ''; }
 
