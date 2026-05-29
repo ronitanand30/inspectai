@@ -3,16 +3,34 @@ import cors from 'cors';
 import fetch from 'node-fetch';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import multer from 'multer';
+import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3000;
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
 
 app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// The only route agents hit — your API key never leaves this server
+// PDF upload + text extraction endpoint
+app.post('/api/parse-pdf', upload.single('pdf'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    const data = await pdfParse(req.file.buffer);
+    const text = data.text?.trim();
+    if (!text || text.length < 50) {
+      return res.status(422).json({ error: 'Could not extract text from this PDF. Please paste the report text manually.' });
+    }
+    res.json({ text });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to parse PDF: ' + err.message });
+  }
+});
+
+// AI analysis endpoint — API key never leaves this server
 app.post('/api/analyze', async (req, res) => {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
