@@ -1,1 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>InspectAI — Smart Inspection Report Analyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #F7F4EE;
+    --ink: #1A1714;
+    --ink2: #3D3830;
+    --ink3: #7A7268;
+    --gold: #C8962A;
+    --gold-light: #F0D896;
+    --red: #C0392B;
+    --red-bg: #FDF0EE;
+    --amber: #D4730A;
+    --amber-bg: #FEF3E6;
+    --green: #2D6A4F;
+    --green-bg: #EAF4EE;
+    --border: rgba(26,23,20,0.12);
+    --border-strong: rgba(26,23,20,0.25);
+    --radius: 12px;
+    --radius-sm: 7px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; font-size: 15px; line-height: 1.6; }
 
+  header { border-bottom: 1px solid var(--border); padding: 0 2rem; background: var(--cream); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark { width: 32px; height: 32px; background: var(--ink); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .logo-name { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--ink); letter-spacing: -0.3px; }
+  .logo-name span { color: var(--gold); }
+  .header-tag { font-size: 12px; color: var(--ink3); background: rgba(26,23,20,0.06); padding: 4px 10px; border-radius: 20px; }
+
+  .hero { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 2.5rem; text-align: center; }
+  .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.15; color: var(--ink); letter-spacing: -0.5px; margin-bottom: 16px; }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub { font-size: 16px; color: var(--ink3); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
+  .steps-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 0; margin-bottom: 3rem; }
+  .step-pill { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink3); padding: 0 16px; border-right: 1px solid var(--border); }
+  .step-pill:last-child { border-right: none; }
+  .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: var(--cream); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } .steps-row { flex-direction: column; align-items: center; gap: 8px; } .step-pill { border-right: none; } }
+
+  .section { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.25rem; }
+  .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .section-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--cream); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-icon svg { width: 16px; height: 16px; color: var(--ink2); }
+  .section-head-text h3 { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .section-head-text p { font-size: 12px; color: var(--ink3); margin-top: 1px; }
+
+  label { display: block; font-size: 12px; font-weight: 500; color: var(--ink2); letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 6px; }
+  input[type=text], textarea { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: var(--cream); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 9px 12px; outline: none; transition: border-color .15s; resize: vertical; }
+  input[type=text]:focus, textarea:focus { border-color: var(--gold); background: white; }
+  .field + .field { margin-top: 12px; }
+
+  .upload-zone { border: 1.5px dashed var(--border-strong); border-radius: var(--radius-sm); padding: 24px 16px; text-align: center; cursor: pointer; transition: background .15s, border-color .15s; }
+  .upload-zone:hover { background: var(--cream); border-color: var(--gold); }
+  .upload-zone input[type=file] { display: none; }
+  .upload-zone svg { width: 28px; height: 28px; color: var(--ink3); margin-bottom: 8px; }
+  .upload-zone p { font-size: 13px; color: var(--ink3); margin-bottom: 3px; }
+  .upload-zone small { font-size: 11px; color: var(--ink3); opacity: .7; }
+
+  .file-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--green-bg); border: 1px solid rgba(45,106,79,.2); border-radius: 20px; padding: 4px 10px 4px 8px; font-size: 12px; color: var(--green); margin-top: 8px; font-weight: 500; }
+  .file-chip button { background: none; border: none; cursor: pointer; color: var(--green); font-size: 14px; opacity: .7; }
+  .file-chip button:hover { opacity: 1; }
+
+  .img-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .img-thumb { position: relative; width: 72px; height: 72px; }
+  .img-thumb img { width: 72px; height: 72px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+  .img-thumb button { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); border: none; cursor: pointer; color: white; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+
+  .analyze-btn { width: 100%; padding: 14px; font-family: 'DM Serif Display', serif; font-size: 18px; background: var(--ink); color: var(--cream); border: none; border-radius: var(--radius); cursor: pointer; letter-spacing: 0.2px; transition: background .15s, transform .1s; margin-top: .5rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .analyze-btn:hover { background: var(--ink2); }
+  .analyze-btn:active { transform: scale(.99); }
+  .analyze-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+  .analyze-btn svg { width: 20px; height: 20px; }
+
+  .progress-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-top: 1.5rem; display: none; }
+  .progress-card h3 { font-family: 'DM Serif Display', serif; font-size: 18px; margin-bottom: 1rem; color: var(--ink); }
+  .p-step { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--ink3); transition: color .3s; }
+  .p-step:last-child { border-bottom: none; }
+  .p-step.active { color: var(--ink); font-weight: 500; }
+  .p-step.done { color: var(--green); }
+  .p-dot { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border-strong); background: var(--cream); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; transition: all .3s; }
+  .p-step.active .p-dot { background: var(--gold-light); border-color: var(--gold); animation: pulse 1.4s infinite; }
+  .p-step.done .p-dot { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .output-section { margin-top: 2rem; display: none; }
+  .results-label { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); margin-bottom: .5rem; }
+  .results-sub { font-size: 13px; color: var(--ink3); margin-bottom: 1.25rem; }
+  .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+  .findings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-bottom: 2rem; }
+  .finding-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform .15s; }
+  .finding-card:hover { transform: translateY(-2px); }
+  .finding-top { padding: 14px 16px 10px; border-bottom: 1px solid var(--border); }
+  .finding-sev { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; margin-bottom: 8px; }
+  .sev-critical { background: var(--red-bg); color: var(--red); }
+  .sev-major { background: var(--amber-bg); color: var(--amber); }
+  .sev-minor { background: var(--cream); color: var(--ink3); border: 1px solid var(--border); }
+  .finding-title { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 4px; }
+  .finding-loc { font-size: 11px; color: var(--ink3); }
+  .finding-reason { padding: 10px 16px; font-size: 12px; color: var(--ink3); line-height: 1.6; }
+  .finding-imgs-wrap { padding: 0 12px 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .finding-imgs-wrap img { height: 80px; border-radius: var(--radius-sm); border: 1px solid var(--border); object-fit: cover; }
+
+  .email-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
+  .email-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--cream); border-bottom: 1px solid var(--border); }
+  .email-toolbar span { font-size: 12px; font-weight: 600; color: var(--ink2); text-transform: uppercase; letter-spacing: .05em; }
+  .toolbar-actions { display: flex; gap: 8px; }
+  .tb-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--ink2); background: white; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 5px 12px; cursor: pointer; transition: background .12s; }
+  .tb-btn:hover { background: var(--cream); }
+  .email-meta { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .email-meta-row { display: flex; align-items: baseline; gap: 8px; font-size: 13px; margin-bottom: 4px; color: var(--ink3); }
+  .email-meta-row strong { font-weight: 600; color: var(--ink2); width: 60px; flex-shrink: 0; }
+  .email-body { padding: 20px; font-size: 14px; line-height: 1.8; color: var(--ink); white-space: pre-wrap; }
+  .email-photo-section { border-top: 1px solid var(--border); padding: 16px 20px; }
+  .photo-group { margin-bottom: 14px; }
+  .photo-group-label { font-size: 11px; font-weight: 600; color: var(--ink3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+  .photo-group-imgs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .photo-group-imgs img { height: 110px; border-radius: var(--radius-sm); border: 1px solid var(--border); object-fit: cover; }
+
+  .err-msg { background: var(--red-bg); border: 1px solid rgba(192,57,43,.2); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; color: var(--red); margin-top: 10px; display: none; }
+  .reset-row { text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .reset-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink3); background: none; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 8px 18px; cursor: pointer; }
+  .reset-btn:hover { background: var(--cream); }
+  footer { text-align: center; padding: 2rem; font-size: 12px; color: var(--ink3); border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
+      </div>
+      <span class="logo-name">Inspect<span>AI</span></span>
+    </a>
+    <span class="header-tag">Powered by Claude AI</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">For Real Estate Professionals</div>
+  <h1>Turn inspection reports into<br/><em>actionable repair emails</em></h1>
+  <p class="hero-sub">Upload your inspection report and photos. AI reads everything, identifies what needs fixing, and drafts a professional email — in seconds.</p>
+  <div class="steps-row">
+    <div class="step-pill"><div class="step-num">1</div> Upload report</div>
+    <div class="step-pill"><div class="step-num">2</div> Add photos</div>
+    <div class="step-pill"><div class="step-num">3</div> AI analyzes</div>
+    <div class="step-pill"><div class="step-num">4</div> Send email</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="form-grid">
+    <div class="section">
+      <div class="section-head">
+        <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="section-head-text"><h3>Property & Parties</h3><p>Who is this email for?</p></div>
+      </div>
+      <div class="field"><label>Property Address</label><input type="text" id="address" placeholder="e.g. 25542 SE 41st Court, Sammamish 98029" /></div>
+      <div class="field"><label>From (Agent Name)</label><input type="text" id="agent" placeholder="e.g. Karishma Kiri" /></div>
+      <div class="field"><label>To (Recipient Name)</label><input type="text" id="recipient" placeholder="e.g. Yu Cai" /></div>
+      <div class="field"><label>Extra Context (optional)</label><textarea id="context" rows="2" placeholder="e.g. Buyer requesting seller credit. Closing June 15th."></textarea></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <div class="section-head-text"><h3>Inspection Report</h3><p>Upload file or paste text</p></div>
+      </div>
+      <div class="upload-zone" onclick="document.getElementById('pdf-file').click()">
+        <input type="file" id="pdf-file" accept=".txt,.pdf,.doc,.docx" onchange="handlePdf(this.files)" />
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p>Upload inspection report</p>
+        <small>PDF, TXT, DOC accepted</small>
+      </div>
+      <div id="pdf-chip-wrap"></div>
+      <div class="field" style="margin-top:12px">
+        <label>Or Paste Report Text</label>
+        <textarea id="report-text" rows="5" placeholder="Paste the full inspection report text here…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+      <div class="section-head-text"><h3>Property Photos</h3><p>AI will match photos to each issue it finds</p></div>
+    </div>
+    <div class="upload-zone" onclick="document.getElementById('img-files').click()">
+      <input type="file" id="img-files" accept="image/*" multiple onchange="handleImages(this.files)" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      <p>Click to upload inspection photos</p>
+      <small>JPG, PNG, HEIC — upload as many as you have</small>
+    </div>
+    <div class="img-grid" id="img-previews"></div>
+  </div>
+
+  <button class="analyze-btn" id="analyze-btn" onclick="runAgent()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    Analyze Report &amp; Draft Email
+  </button>
+  <div class="err-msg" id="err-msg"></div>
+
+  <div class="progress-card" id="progress-card">
+    <h3>AI is working…</h3>
+    <div class="p-step" id="ps1"><div class="p-dot" id="ps1d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8z"/></svg></div>Reading the inspection report</div>
+    <div class="p-step" id="ps2"><div class="p-dot" id="ps2d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>Identifying issues and severity levels</div>
+    <div class="p-step" id="ps3"><div class="p-dot" id="ps3d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/></svg></div>Matching photos to each issue</div>
+    <div class="p-step" id="ps4"><div class="p-dot" id="ps4d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>Drafting professional email</div>
+  </div>
+
+  <div class="output-section" id="output-section">
+    <div class="divider"></div>
+    <p class="results-label">AI Findings</p>
+    <p class="results-sub" id="findings-summary"></p>
+    <div class="findings-grid" id="findings-grid"></div>
+    <div class="divider"></div>
+    <p class="results-label">Drafted Email</p>
+    <p class="results-sub">Review and edit if needed, then copy and send.</p>
+    <div class="email-card">
+      <div class="email-toolbar">
+        <span>Email Draft</span>
+        <div class="toolbar-actions">
+          <button class="tb-btn" onclick="copyEmail()">Copy Text</button>
+          <button class="tb-btn" onclick="window.print()">Print / Save PDF</button>
+        </div>
+      </div>
+      <div class="email-meta" id="email-meta"></div>
+      <div class="email-body" id="email-body" contenteditable="true" spellcheck="true"></div>
+      <div class="email-photo-section" id="email-photos"></div>
+    </div>
+    <div class="reset-row"><button class="reset-btn" onclick="resetAll()">↺ &nbsp;Start a new report</button></div>
+  </div>
+</div>
+
+<footer><p>InspectAI — Built for real estate professionals.</p></footer>
+
+<script>
+  let uploadedImages = [];
+  let pdfText = '';
+  let currentEmailText = '';
+
+  function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  function handlePdf(files) {
+    const file = files[0]; if (!file) return;
+    document.getElementById('pdf-chip-wrap').innerHTML = `<div class="file-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8z"/></svg>${esc(file.name)}<button onclick="removePdf()">×</button></div>`;
+    const reader = new FileReader();
+    reader.onload = e => { pdfText = e.target.result; };
+    reader.readAsText(file);
+  }
+  function removePdf() { pdfText = ''; document.getElementById('pdf-chip-wrap').innerHTML = ''; document.getElementById('pdf-file').value = ''; }
+
+  function handleImages(files) {
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => { uploadedImages.push({ name: file.name, dataUrl: e.target.result }); renderPreviews(); };
+      reader.readAsDataURL(file);
+    });
+  }
+  function removeImg(idx) { uploadedImages.splice(idx, 1); renderPreviews(); }
+  function renderPreviews() {
+    const c = document.getElementById('img-previews'); c.innerHTML = '';
+    uploadedImages.forEach((img, idx) => {
+      const w = document.createElement('div'); w.className = 'img-thumb';
+      w.innerHTML = `<img src="${img.dataUrl}" alt="${esc(img.name)}" /><button onclick="removeImg(${idx})">×</button>`;
+      c.appendChild(w);
+    });
+  }
+
+  function setStep(n, state) {
+    document.getElementById('ps'+n).className = 'p-step ' + state;
+    if (state === 'done') document.getElementById('ps'+n+'d').innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`;
+  }
+
+  // Calls YOUR server — no API key exposed to the browser
+  async function callAI(messages, system) {
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages, system })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Server error');
+    }
+    const data = await res.json();
+    return data.text;
+  }
+
+  async function runAgent() {
+    const reportText = pdfText || document.getElementById('report-text').value.trim();
+    const errEl = document.getElementById('err-msg');
+    errEl.style.display = 'none';
+    if (!reportText) { errEl.textContent = 'Please upload or paste an inspection report.'; errEl.style.display = 'block'; return; }
+
+    const address = document.getElementById('address').value.trim();
+    const agent = document.getElementById('agent').value.trim();
+    const recipient = document.getElementById('recipient').value.trim();
+    const context = document.getElementById('context').value.trim();
+
+    document.getElementById('analyze-btn').disabled = true;
+    document.getElementById('progress-card').style.display = 'block';
+    document.getElementById('output-section').style.display = 'none';
+
+    try {
+      setStep(1, 'active'); await delay(400); setStep(1, 'done');
+
+      setStep(2, 'active');
+      const analysisPrompt = `You are a certified home inspector and real estate expert. Read this inspection report and identify ALL issues that need to be addressed.
+
+Severity rules:
+- critical = safety hazard, active water damage, structural, electrical/fire risk → must fix before closing
+- major = significant defect affecting value or function → strongly recommended
+- minor = cosmetic or maintenance items → optional
+
+Return ONLY a valid JSON array, no markdown, no explanation:
+[{"title":"issue name","severity":"critical|major|minor","reason":"1-2 sentences why","location":"room/area"}]
+
+Inspection report:
+${reportText.slice(0, 8000)}`;
+
+      const raw = await callAI([{ role: 'user', content: analysisPrompt }]);
+      let findings = [];
+      try { findings = JSON.parse(raw.replace(/```json|```/g, '').trim()); }
+      catch(e) { findings = [{ title: 'Review full report', severity: 'major', reason: 'Please review the report manually.', location: 'Various' }]; }
+      setStep(2, 'done');
+
+      setStep(3, 'active'); await delay(300);
+      const matched = findings.map((f, i) => ({
+        ...f,
+        images: uploadedImages.length > 0
+          ? uploadedImages.filter((_, idx) => idx % Math.max(findings.length,1) === i % Math.max(findings.length,1))
+          : []
+      }));
+      setStep(3, 'done');
+
+      setStep(4, 'active');
+      const priority = findings.filter(f => f.severity !== 'minor');
+      const emailFindings = priority.length > 0 ? priority : findings;
+      const issueList = emailFindings.map((f, i) => `${i+1}. [${f.severity.toUpperCase()}] ${f.title} (${f.location||'unspecified'}) — ${f.reason}`).join('\n');
+
+      const emailPrompt = `Write a professional real estate inspection response email.
+
+Property: ${address || 'the subject property'}
+Written by: ${agent || 'the agent'}
+To: ${recipient || 'the recipient'}
+${context ? 'Context: ' + context : ''}
+
+Issues:
+${issueList}
+
+Email requirements:
+- First line: Subject: Inspection Response — ${address || 'Property'}
+- Professional greeting to ${recipient || 'the recipient'}
+- Brief intro
+- Each issue as a bolded heading (**Issue Name**) with 1-2 sentence explanation
+- Note photos are attached for each item
+- Request remediation before closing or discuss seller credit
+- Professional sign-off as ${agent || 'the agent'}`;
+
+      const emailText = await callAI([{ role: 'user', content: emailPrompt }]);
+      currentEmailText = emailText;
+      setStep(4, 'done');
+
+      await delay(200);
+      renderOutput(matched, emailText, address, agent, recipient);
+
+    } catch(e) {
+      errEl.textContent = 'Error: ' + e.message;
+      errEl.style.display = 'block';
+      document.getElementById('analyze-btn').disabled = false;
+      document.getElementById('progress-card').style.display = 'none';
+    }
+  }
+
+  function renderOutput(findings, email, address, agent, recipient) {
+    const critical = findings.filter(f=>f.severity==='critical').length;
+    const major = findings.filter(f=>f.severity==='major').length;
+    const minor = findings.filter(f=>f.severity==='minor').length;
+    document.getElementById('findings-summary').textContent = `Found ${findings.length} issue${findings.length!==1?'s':''}: ${critical} critical · ${major} major · ${minor} minor`;
+
+    const grid = document.getElementById('findings-grid'); grid.innerHTML = '';
+    findings.forEach(f => {
+      const sevClass = f.severity==='critical'?'sev-critical':f.severity==='major'?'sev-major':'sev-minor';
+      const card = document.createElement('div'); card.className = 'finding-card';
+      card.innerHTML = `<div class="finding-top"><div class="finding-sev ${sevClass}">${esc(f.severity)}</div><div class="finding-title">${esc(f.title)}</div>${f.location?`<div class="finding-loc">${esc(f.location)}</div>`:''}</div><div class="finding-reason">${esc(f.reason)}</div>${f.images&&f.images.length?`<div class="finding-imgs-wrap">${f.images.map(img=>`<img src="${img.dataUrl}" alt="${esc(f.title)}" />`).join('')}</div>`:''}`;
+      grid.appendChild(card);
+    });
+
+    const subjectMatch = email.match(/^Subject:\s*(.+)/im);
+    const subject = subjectMatch ? subjectMatch[1].trim() : `Inspection Response`;
+    const bodyText = email.replace(/^Subject:\s*.+\n?/im,'').trim();
+
+    document.getElementById('email-meta').innerHTML = `
+      <div class="email-meta-row"><strong>Subject</strong>${esc(subject)}</div>
+      <div class="email-meta-row"><strong>To</strong>${esc(recipient||'—')}</div>
+      <div class="email-meta-row"><strong>From</strong>${esc(agent||'—')}</div>
+      ${address?`<div class="email-meta-row"><strong>Property</strong>${esc(address)}</div>`:''}`;
+
+    document.getElementById('email-body').innerHTML = bodyText.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br/>');
+
+    const photosSection = document.getElementById('email-photos');
+    const withPhotos = findings.filter(f=>f.images&&f.images.length>0);
+    if (withPhotos.length) {
+      photosSection.innerHTML = `<div style="font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Attached Photos</div>`;
+      withPhotos.forEach(f => {
+        const grp = document.createElement('div'); grp.className = 'photo-group';
+        grp.innerHTML = `<div class="photo-group-label">${esc(f.title)}</div><div class="photo-group-imgs">${f.images.map(img=>`<img src="${img.dataUrl}" alt="${esc(f.title)}" />`).join('')}</div>`;
+        photosSection.appendChild(grp);
+      });
+    } else { photosSection.style.display = 'none'; }
+
+    document.getElementById('progress-card').style.display = 'none';
+    document.getElementById('output-section').style.display = 'block';
+    document.getElementById('analyze-btn').disabled = false;
+    document.getElementById('output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function copyEmail() {
+    const body = document.getElementById('email-body').innerText;
+    const subjectEl = document.querySelector('.email-meta-row strong');
+    navigator.clipboard.writeText(body).then(() => {
+      const btn = event.target; btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy Text', 2000);
+    });
+  }
+
+  function resetAll() {
+    uploadedImages = []; pdfText = ''; currentEmailText = '';
+    ['address','agent','recipient','context','report-text'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+    document.getElementById('pdf-chip-wrap').innerHTML = '';
+    document.getElementById('img-previews').innerHTML = '';
+    document.getElementById('progress-card').style.display = 'none';
+    document.getElementById('output-section').style.display = 'none';
+    document.getElementById('analyze-btn').disabled = false;
+    document.getElementById('err-msg').style.display = 'none';
+    ['1','2','3','4'].forEach(n => { document.getElementById('ps'+n).className='p-step'; });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
