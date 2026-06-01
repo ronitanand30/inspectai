@@ -335,7 +335,7 @@ Read the report and identify ALL issues. For each issue provide:
 - category: short category name (e.g. "Furnace", "Windows", "Plumbing", "Roof", "Electrical")
 - issues: detailed description of the problem(s) found. If multiple sub-issues, list them clearly.
 - recommendation: what should be done (e.g. "Ask seller for credit", "Seller to repair before closing", "Get contractor quote")
-- cost: estimated repair cost as a string (e.g. "$3,000", "$5,000–$8,000", "NA" if not applicable)
+- cost: a realistic single cost estimate as a string (e.g. "$3,000", "$1,500", "NA" if not applicable). Use a specific number based on typical contractor rates, not a wide range. Only use a range if genuinely uncertain (e.g. "$2,000–$3,000" max spread of 50%).
 - severity: "critical", "major", or "minor"
 
 Return ONLY a valid JSON array, no markdown, no explanation:
@@ -348,6 +348,9 @@ ${reportText.slice(0, 8000)}`;
       let findings = [];
       try { findings = JSON.parse(raw.replace(/```json|```/g, '').trim()); }
       catch(e) { findings = [{ category: 'General', issues: 'Could not parse report automatically. Please review manually.', recommendation: 'Review report', cost: 'NA', severity: 'major' }]; }
+      // Sort: critical first, then major, then minor
+      const sevOrder = { critical: 0, major: 1, minor: 2 };
+      findings.sort((a, b) => (sevOrder[a.severity] ?? 1) - (sevOrder[b.severity] ?? 1));
       tableData = findings;
       setStep(2, 'done');
 
