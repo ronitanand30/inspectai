@@ -37,19 +37,19 @@
   .logo-name span { color: var(--gold); }
   .header-tag { font-size: 12px; color: var(--ink3); background: rgba(26,23,20,0.06); padding: 4px 10px; border-radius: 20px; }
 
-  .hero { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 2.5rem; text-align: center; }
-  .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.15; color: var(--ink); letter-spacing: -0.5px; margin-bottom: 16px; }
+  .hero { max-width: 900px; margin: 0 auto; padding: 3.5rem 2rem 2rem; text-align: center; }
+  .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; color: var(--ink); letter-spacing: -0.5px; margin-bottom: 14px; }
   .hero h1 em { font-style: italic; color: var(--gold); }
-  .hero-sub { font-size: 16px; color: var(--ink3); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
-  .steps-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 0; margin-bottom: 3rem; }
+  .hero-sub { font-size: 15px; color: var(--ink3); max-width: 460px; margin: 0 auto 2rem; line-height: 1.7; }
+  .steps-row { display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
   .step-pill { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink3); padding: 0 16px; border-right: 1px solid var(--border); }
   .step-pill:last-child { border-right: none; }
   .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: var(--cream); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
   .main { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } .steps-row { flex-direction: column; align-items: center; gap: 8px; } .step-pill { border-right: none; } }
+  @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
 
   .section { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.25rem; }
   .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
@@ -63,79 +63,96 @@
   input[type=text]:focus, textarea:focus { border-color: var(--gold); background: white; }
   .field + .field { margin-top: 12px; }
 
-  .upload-zone { border: 1.5px dashed var(--border-strong); border-radius: var(--radius-sm); padding: 24px 16px; text-align: center; cursor: pointer; transition: background .15s, border-color .15s; }
+  .upload-zone { border: 1.5px dashed var(--border-strong); border-radius: var(--radius-sm); padding: 28px 16px; text-align: center; cursor: pointer; transition: background .15s, border-color .15s; }
   .upload-zone:hover { background: var(--cream); border-color: var(--gold); }
   .upload-zone input[type=file] { display: none; }
-  .upload-zone svg { width: 28px; height: 28px; color: var(--ink3); margin-bottom: 8px; }
+  .upload-zone svg { width: 30px; height: 30px; color: var(--ink3); margin-bottom: 10px; }
   .upload-zone p { font-size: 13px; color: var(--ink3); margin-bottom: 3px; }
   .upload-zone small { font-size: 11px; color: var(--ink3); opacity: .7; }
 
   .file-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--green-bg); border: 1px solid rgba(45,106,79,.2); border-radius: 20px; padding: 4px 10px 4px 8px; font-size: 12px; color: var(--green); margin-top: 8px; font-weight: 500; }
   .file-chip button { background: none; border: none; cursor: pointer; color: var(--green); font-size: 14px; opacity: .7; }
-  .file-chip button:hover { opacity: 1; }
 
-  .img-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-  .img-thumb { position: relative; width: 72px; height: 72px; }
-  .img-thumb img { width: 72px; height: 72px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border); }
-  .img-thumb button { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); border: none; cursor: pointer; color: white; font-size: 10px; display: flex; align-items: center; justify-content: center; }
-
-  .analyze-btn { width: 100%; padding: 14px; font-family: 'DM Serif Display', serif; font-size: 18px; background: var(--ink); color: var(--cream); border: none; border-radius: var(--radius); cursor: pointer; letter-spacing: 0.2px; transition: background .15s, transform .1s; margin-top: .5rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .analyze-btn { width: 100%; padding: 14px; font-family: 'DM Serif Display', serif; font-size: 18px; background: var(--ink); color: var(--cream); border: none; border-radius: var(--radius); cursor: pointer; transition: background .15s, transform .1s; margin-top: .5rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
   .analyze-btn:hover { background: var(--ink2); }
   .analyze-btn:active { transform: scale(.99); }
   .analyze-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-  .analyze-btn svg { width: 20px; height: 20px; }
 
   .progress-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-top: 1.5rem; display: none; }
   .progress-card h3 { font-family: 'DM Serif Display', serif; font-size: 18px; margin-bottom: 1rem; color: var(--ink); }
-  .p-step { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--ink3); transition: color .3s; }
+  .p-step { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--ink3); }
   .p-step:last-child { border-bottom: none; }
   .p-step.active { color: var(--ink); font-weight: 500; }
   .p-step.done { color: var(--green); }
-  .p-dot { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border-strong); background: var(--cream); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; transition: all .3s; }
+  .p-dot { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border-strong); background: var(--cream); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .3s; }
   .p-step.active .p-dot { background: var(--gold-light); border-color: var(--gold); animation: pulse 1.4s infinite; }
   .p-step.done .p-dot { background: var(--green-bg); border-color: var(--green); color: var(--green); }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
+  /* ── OUTPUT ── */
   .output-section { margin-top: 2rem; display: none; }
-  .results-label { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); margin-bottom: .5rem; }
+  .results-label { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); margin-bottom: .4rem; }
   .results-sub { font-size: 13px; color: var(--ink3); margin-bottom: 1.25rem; }
   .divider { height: 1px; background: var(--border); margin: 2rem 0; }
 
-  .findings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-bottom: 2rem; }
-  .finding-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform .15s; }
-  .finding-card:hover { transform: translateY(-2px); }
-  .finding-top { padding: 14px 16px 10px; border-bottom: 1px solid var(--border); }
-  .finding-sev { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; margin-bottom: 8px; }
-  .sev-critical { background: var(--red-bg); color: var(--red); }
-  .sev-major { background: var(--amber-bg); color: var(--amber); }
-  .sev-minor { background: var(--cream); color: var(--ink3); border: 1px solid var(--border); }
-  .finding-title { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 4px; }
-  .finding-loc { font-size: 11px; color: var(--ink3); }
-  .finding-reason { padding: 10px 16px; font-size: 12px; color: var(--ink3); line-height: 1.6; }
-  .finding-imgs-wrap { padding: 0 12px 12px; display: flex; flex-wrap: wrap; gap: 6px; }
-  .finding-imgs-wrap img { height: 80px; border-radius: var(--radius-sm); border: 1px solid var(--border); object-fit: cover; }
-
-  .email-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
-  .email-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--cream); border-bottom: 1px solid var(--border); }
-  .email-toolbar span { font-size: 12px; font-weight: 600; color: var(--ink2); text-transform: uppercase; letter-spacing: .05em; }
+  /* ── TABLE ── */
+  .table-wrap { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
+  .table-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--cream); border-bottom: 1px solid var(--border); }
+  .table-toolbar span { font-size: 12px; font-weight: 600; color: var(--ink2); text-transform: uppercase; letter-spacing: .05em; }
   .toolbar-actions { display: flex; gap: 8px; }
   .tb-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--ink2); background: white; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 5px 12px; cursor: pointer; transition: background .12s; }
   .tb-btn:hover { background: var(--cream); }
+
+  .findings-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  .findings-table th { background: var(--ink); color: var(--cream); font-weight: 500; padding: 10px 10px; text-align: left; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+  .findings-table td { padding: 10px 10px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--ink2); line-height: 1.5; font-size: 13px; word-wrap: break-word; }
+  .findings-table tr:last-child td { border-bottom: none; }
+  .findings-table tr:hover td { background: var(--cream); }
+  .findings-table td:nth-child(4) { font-weight: 600; color: var(--green); white-space: nowrap; }
+  .findings-table col.col-cat { width: 13%; }
+  .findings-table col.col-issues { width: 32%; }
+  .findings-table col.col-rec { width: 30%; }
+  .findings-table col.col-cost { width: 13%; }
+  .findings-table col.col-pri { width: 12%; }
+
+  .sev-badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 20px; white-space: nowrap; }
+  .sev-critical { background: var(--red-bg); color: var(--red); }
+  .sev-major { background: var(--amber-bg); color: var(--amber); }
+  .sev-minor { background: var(--cream); color: var(--ink3); border: 1px solid var(--border); }
+
+  .cost-total { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 12px 16px; border-top: 2px solid var(--border-strong); background: var(--cream); }
+  .cost-total span { font-size: 13px; color: var(--ink3); }
+  .cost-total strong { font-size: 16px; font-weight: 600; color: var(--ink); }
+
+  /* ── EMAIL ── */
+  .email-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
+  .email-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--cream); border-bottom: 1px solid var(--border); }
+  .email-toolbar span { font-size: 12px; font-weight: 600; color: var(--ink2); text-transform: uppercase; letter-spacing: .05em; }
   .email-meta { padding: 12px 16px; border-bottom: 1px solid var(--border); }
   .email-meta-row { display: flex; align-items: baseline; gap: 8px; font-size: 13px; margin-bottom: 4px; color: var(--ink3); }
   .email-meta-row strong { font-weight: 600; color: var(--ink2); width: 60px; flex-shrink: 0; }
   .email-body { padding: 20px; font-size: 14px; line-height: 1.8; color: var(--ink); white-space: pre-wrap; }
-  .email-photo-section { border-top: 1px solid var(--border); padding: 16px 20px; }
-  .photo-group { margin-bottom: 14px; }
-  .photo-group-label { font-size: 11px; font-weight: 600; color: var(--ink3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
-  .photo-group-imgs { display: flex; flex-wrap: wrap; gap: 8px; }
-  .photo-group-imgs img { height: 110px; border-radius: var(--radius-sm); border: 1px solid var(--border); object-fit: cover; }
 
   .err-msg { background: var(--red-bg); border: 1px solid rgba(192,57,43,.2); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; color: var(--red); margin-top: 10px; display: none; }
   .reset-row { text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
   .reset-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink3); background: none; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 8px 18px; cursor: pointer; }
   .reset-btn:hover { background: var(--cream); }
-  footer { text-align: center; padding: 2rem; font-size: 12px; color: var(--ink3); border-top: 1px solid var(--border); }
+  footer { text-align: center; padding: 2rem; font-size: 12px; color: var(--ink3); border-top: 1px solid var(--border); margin-top: 2rem; }
+
+  .edit-mode td[contenteditable="true"] { background: #fffbf0; outline: 1.5px solid var(--gold); border-radius: 4px; cursor: text; }
+  .edit-mode td[contenteditable="true"]:focus { background: white; outline: 2px solid var(--gold); }
+  .tb-btn.editing { background: var(--gold-light); border-color: var(--gold); color: var(--ink); }
+  .tb-btn.save { background: var(--ink); color: white; border-color: var(--ink); }
+  .tb-btn.save:hover { background: var(--ink2); }
+  .edit-hint { font-size: 11px; color: var(--gold); margin-top: 6px; display: none; }
+  .edit-hint.visible { display: block; }
+  .email-body.edit-mode { background: #fffbf0; outline: 1.5px solid var(--gold); border-radius: 4px; }
+
+  @media print {
+    header, .hero, .form-section, .analyze-btn, .reset-row, footer, .tb-btn, .toolbar-actions { display: none !important; }
+    .output-section { display: block !important; }
+    body { background: white; }
+  }
 </style>
 </head>
 <body>
@@ -154,96 +171,116 @@
 
 <div class="hero">
   <div class="hero-eyebrow">For Real Estate Professionals</div>
-  <h1>Turn inspection reports into<br/><em>actionable repair emails</em></h1>
-  <p class="hero-sub">Upload your inspection report and photos. AI reads everything, identifies what needs fixing, and drafts a professional email — in seconds.</p>
+  <h1>Turn inspection reports into<br/><em>repair summaries & emails</em></h1>
+  <p class="hero-sub">Upload your inspection report. AI reads it, identifies every issue, estimates costs, and drafts a professional email — instantly.</p>
   <div class="steps-row">
     <div class="step-pill"><div class="step-num">1</div> Upload report</div>
-    <div class="step-pill"><div class="step-num">2</div> Add photos</div>
-    <div class="step-pill"><div class="step-num">3</div> AI analyzes</div>
+    <div class="step-pill"><div class="step-num">2</div> AI analyzes</div>
+    <div class="step-pill"><div class="step-num">3</div> Review table</div>
     <div class="step-pill"><div class="step-num">4</div> Send email</div>
   </div>
 </div>
 
 <div class="main">
-  <div class="form-grid">
-    <div class="section">
-      <div class="section-head">
-        <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-        <div class="section-head-text"><h3>Property & Parties</h3><p>Who is this email for?</p></div>
+  <div class="form-section">
+    <div class="form-grid">
+      <div class="section">
+        <div class="section-head">
+          <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="section-head-text"><h3>Property & Parties</h3><p>Who is this report for?</p></div>
+        </div>
+        <div class="field"><label>Property Address</label><input type="text" id="address" placeholder="e.g. 25542 SE 41st Court, Sammamish 98029" /></div>
+        <div class="field"><label>From (Agent Name)</label><input type="text" id="agent" placeholder="e.g. Karishma Kiri" /></div>
+        <div class="field"><label>To (Recipient Name)</label><input type="text" id="recipient" placeholder="e.g. Yu Cai" /></div>
+        <div class="field"><label>Extra Context (optional)</label><textarea id="context" rows="2" placeholder="e.g. Buyer requesting seller credit. Closing June 15th."></textarea></div>
       </div>
-      <div class="field"><label>Property Address</label><input type="text" id="address" placeholder="e.g. 25542 SE 41st Court, Sammamish 98029" /></div>
-      <div class="field"><label>From (Agent Name)</label><input type="text" id="agent" placeholder="e.g. Karishma Kiri" /></div>
-      <div class="field"><label>To (Recipient Name)</label><input type="text" id="recipient" placeholder="e.g. Yu Cai" /></div>
-      <div class="field"><label>Extra Context (optional)</label><textarea id="context" rows="2" placeholder="e.g. Buyer requesting seller credit. Closing June 15th."></textarea></div>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="section-head-text"><h3>Inspection Report</h3><p>Upload or paste your report</p></div>
+        </div>
+        <div class="upload-zone" onclick="document.getElementById('pdf-file').click()">
+          <input type="file" id="pdf-file" accept=".txt,.pdf,.doc,.docx" onchange="handlePdf(this.files)" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <p>Click to upload inspection report</p>
+          <small>PDF, TXT, DOC accepted</small>
+        </div>
+        <div id="pdf-chip-wrap"></div>
+        <div class="field" style="margin-top:12px">
+          <label>Or Paste Report Text</label>
+          <textarea id="report-text" rows="6" placeholder="Paste the full inspection report text here…"></textarea>
+        </div>
+      </div>
     </div>
 
-    <div class="section">
-      <div class="section-head">
-        <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-        <div class="section-head-text"><h3>Inspection Report</h3><p>Upload file or paste text</p></div>
-      </div>
-      <div class="upload-zone" onclick="document.getElementById('pdf-file').click()">
-        <input type="file" id="pdf-file" accept=".txt,.pdf,.doc,.docx" onchange="handlePdf(this.files)" />
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        <p>Upload inspection report</p>
-        <small>PDF, TXT, DOC accepted</small>
-      </div>
-      <div id="pdf-chip-wrap"></div>
-      <div class="field" style="margin-top:12px">
-        <label>Or Paste Report Text</label>
-        <textarea id="report-text" rows="5" placeholder="Paste the full inspection report text here…"></textarea>
-      </div>
-    </div>
+    <button class="analyze-btn" id="analyze-btn" onclick="runAgent()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Analyze Report &amp; Draft Email
+    </button>
+    <div class="err-msg" id="err-msg"></div>
   </div>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
-      <div class="section-head-text"><h3>Property Photos</h3><p>AI will match photos to each issue it finds</p></div>
-    </div>
-    <div class="upload-zone" onclick="document.getElementById('img-files').click()">
-      <input type="file" id="img-files" accept="image/*" multiple onchange="handleImages(this.files)" />
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      <p>Click to upload inspection photos</p>
-      <small>JPG, PNG, HEIC — upload as many as you have</small>
-    </div>
-    <div class="img-grid" id="img-previews"></div>
-  </div>
-
-  <button class="analyze-btn" id="analyze-btn" onclick="runAgent()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-    Analyze Report &amp; Draft Email
-  </button>
-  <div class="err-msg" id="err-msg"></div>
 
   <div class="progress-card" id="progress-card">
     <h3>AI is working…</h3>
     <div class="p-step" id="ps1"><div class="p-dot" id="ps1d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8z"/></svg></div>Reading the inspection report</div>
-    <div class="p-step" id="ps2"><div class="p-dot" id="ps2d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>Identifying issues and severity levels</div>
-    <div class="p-step" id="ps3"><div class="p-dot" id="ps3d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/></svg></div>Matching photos to each issue</div>
-    <div class="p-step" id="ps4"><div class="p-dot" id="ps4d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>Drafting professional email</div>
+    <div class="p-step" id="ps2"><div class="p-dot" id="ps2d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>Identifying issues, severity &amp; cost estimates</div>
+    <div class="p-step" id="ps3"><div class="p-dot" id="ps3d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>Drafting professional email</div>
   </div>
 
   <div class="output-section" id="output-section">
     <div class="divider"></div>
-    <p class="results-label">AI Findings</p>
+
+    <p class="results-label">Repair Summary</p>
     <p class="results-sub" id="findings-summary"></p>
-    <div class="findings-grid" id="findings-grid"></div>
+
+    <div class="table-wrap">
+      <div class="table-toolbar">
+        <span>Issues Found</span>
+        <div class="toolbar-actions">
+          <button class="tb-btn" id="edit-table-btn" onclick="toggleTableEdit()">✏️ Edit Table</button>
+          <button class="tb-btn" onclick="copyTable()">Copy Table</button>
+          <button class="tb-btn" onclick="window.print()">Print / Save PDF</button>
+        </div>
+      </div>
+      <div class="edit-hint" id="table-edit-hint">Click any cell to edit. Click "Save" when done.</div>
+      <div>
+        <table class="findings-table" id="findings-table">
+          <colgroup>
+            <col class="col-cat"/><col class="col-issues"/><col class="col-rec"/><col class="col-cost"/><col class="col-pri"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Issues</th>
+              <th>Recommendation</th>
+              <th>Est. Cost</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody id="findings-tbody"></tbody>
+        </table>
+      </div>
+      <div class="cost-total" id="cost-total"></div>
+    </div>
+
     <div class="divider"></div>
+
     <p class="results-label">Drafted Email</p>
     <p class="results-sub">Review and edit if needed, then copy and send.</p>
     <div class="email-card">
       <div class="email-toolbar">
         <span>Email Draft</span>
         <div class="toolbar-actions">
-          <button class="tb-btn" onclick="copyEmail()">Copy Text</button>
-          <button class="tb-btn" onclick="window.print()">Print / Save PDF</button>
+          <button class="tb-btn" id="edit-email-btn" onclick="toggleEmailEdit()">✏️ Edit Email</button>
+          <button class="tb-btn" onclick="copyEmail()">Copy Email</button>
         </div>
       </div>
+      <div class="edit-hint" id="email-edit-hint">Click anywhere in the email to edit. Click "Save" when done.</div>
       <div class="email-meta" id="email-meta"></div>
       <div class="email-body" id="email-body" contenteditable="true" spellcheck="true"></div>
-      <div class="email-photo-section" id="email-photos"></div>
     </div>
+
     <div class="reset-row"><button class="reset-btn" onclick="resetAll()">↺ &nbsp;Start a new report</button></div>
   </div>
 </div>
@@ -251,57 +288,46 @@
 <footer><p>InspectAI — Built for real estate professionals.</p></footer>
 
 <script>
-  let uploadedImages = [];
   let pdfText = '';
   let currentEmailText = '';
+  let tableData = [];
 
   function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-  function handlePdf(files) {
+  async function handlePdf(files) {
     const file = files[0]; if (!file) return;
-    document.getElementById('pdf-chip-wrap').innerHTML = `<div class="file-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8z"/></svg>${esc(file.name)}<button onclick="removePdf()">×</button></div>`;
-    const reader = new FileReader();
-    reader.onload = e => { pdfText = e.target.result; };
-    reader.readAsText(file);
+    const chipWrap = document.getElementById('pdf-chip-wrap');
+    chipWrap.innerHTML = `<div class="file-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8z"/></svg>&nbsp;${esc(file.name)} — reading...</div>`;
+    try {
+      const formData = new FormData();
+      formData.append('pdf', file);
+      const res = await fetch('/api/parse-pdf', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not read PDF');
+      pdfText = data.text;
+      chipWrap.innerHTML = `<div class="file-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8z"/></svg>&nbsp;${esc(file.name)} (ready)<button onclick="removePdf()">x</button></div>`;
+    } catch(e) {
+      chipWrap.innerHTML = '';
+      document.getElementById('err-msg').textContent = 'PDF error: ' + e.message;
+      document.getElementById('err-msg').style.display = 'block';
+    }
   }
   function removePdf() { pdfText = ''; document.getElementById('pdf-chip-wrap').innerHTML = ''; document.getElementById('pdf-file').value = ''; }
-
-  function handleImages(files) {
-    Array.from(files).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = e => { uploadedImages.push({ name: file.name, dataUrl: e.target.result }); renderPreviews(); };
-      reader.readAsDataURL(file);
-    });
-  }
-  function removeImg(idx) { uploadedImages.splice(idx, 1); renderPreviews(); }
-  function renderPreviews() {
-    const c = document.getElementById('img-previews'); c.innerHTML = '';
-    uploadedImages.forEach((img, idx) => {
-      const w = document.createElement('div'); w.className = 'img-thumb';
-      w.innerHTML = `<img src="${img.dataUrl}" alt="${esc(img.name)}" /><button onclick="removeImg(${idx})">×</button>`;
-      c.appendChild(w);
-    });
-  }
 
   function setStep(n, state) {
     document.getElementById('ps'+n).className = 'p-step ' + state;
     if (state === 'done') document.getElementById('ps'+n+'d').innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`;
   }
 
-  // Calls YOUR server — no API key exposed to the browser
-  async function callAI(messages, system) {
+  async function callAI(messages) {
     const res = await fetch('/api/analyze', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages, system })
+      body: JSON.stringify({ messages })
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Server error');
-    }
-    const data = await res.json();
-    return data.text;
+    if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error || 'Server error'); }
+    return (await res.json()).text;
   }
 
   async function runAgent() {
@@ -322,16 +348,19 @@
     try {
       setStep(1, 'active'); await delay(400); setStep(1, 'done');
 
+      // Step 2 — analyze and build table
       setStep(2, 'active');
-      const analysisPrompt = `You are a certified home inspector and real estate expert. Read this inspection report and identify ALL issues that need to be addressed.
+      const analysisPrompt = `You are a certified home inspector and real estate expert analyzing an inspection report for a real estate agent.
 
-Severity rules:
-- critical = safety hazard, active water damage, structural, electrical/fire risk → must fix before closing
-- major = significant defect affecting value or function → strongly recommended
-- minor = cosmetic or maintenance items → optional
+Read the report and identify ALL issues. For each issue provide:
+- category: short category name (e.g. "Furnace", "Windows", "Plumbing")
+- issues: 1 sentence max. Be concise and specific (e.g. "Active leak under kitchen sink with cabinet water damage.")
+- recommendation: 1 short action phrase (e.g. "Seller to repair before closing" or "Request $3,000 credit")
+- cost: single realistic number (e.g. "$3,000"). No wide ranges. Use contractor averages. "NA" if not applicable.
+- severity: "critical", "major", or "minor"
 
 Return ONLY a valid JSON array, no markdown, no explanation:
-[{"title":"issue name","severity":"critical|major|minor","reason":"1-2 sentences why","location":"room/area"}]
+[{"category":"...","issues":"...","recommendation":"...","cost":"...","severity":"critical|major|minor"}]
 
 Inspection report:
 ${reportText.slice(0, 8000)}`;
@@ -339,73 +368,100 @@ ${reportText.slice(0, 8000)}`;
       const raw = await callAI([{ role: 'user', content: analysisPrompt }]);
       let findings = [];
       try { findings = JSON.parse(raw.replace(/```json|```/g, '').trim()); }
-      catch(e) { findings = [{ title: 'Review full report', severity: 'major', reason: 'Please review the report manually.', location: 'Various' }]; }
+      catch(e) { findings = [{ category: 'General', issues: 'Could not parse report automatically. Please review manually.', recommendation: 'Review report', cost: 'NA', severity: 'major' }]; }
+      // Sort: critical first, then major, then minor
+      const sevOrder = { critical: 0, major: 1, minor: 2 };
+      findings.sort((a, b) => (sevOrder[a.severity] ?? 1) - (sevOrder[b.severity] ?? 1));
+      tableData = findings;
       setStep(2, 'done');
 
-      setStep(3, 'active'); await delay(300);
-      const matched = findings.map((f, i) => ({
-        ...f,
-        images: uploadedImages.length > 0
-          ? uploadedImages.filter((_, idx) => idx % Math.max(findings.length,1) === i % Math.max(findings.length,1))
-          : []
-      }));
-      setStep(3, 'done');
-
-      setStep(4, 'active');
-      const priority = findings.filter(f => f.severity !== 'minor');
-      const emailFindings = priority.length > 0 ? priority : findings;
-      const issueList = emailFindings.map((f, i) => `${i+1}. [${f.severity.toUpperCase()}] ${f.title} (${f.location||'unspecified'}) — ${f.reason}`).join('\n');
+      // Step 3 — draft email
+      setStep(3, 'active');
+      const issueList = findings.map((f,i) => `${i+1}. [${f.severity.toUpperCase()}] ${f.category}: ${f.issues} | Recommendation: ${f.recommendation} | Est. Cost: ${f.cost}`).join('\n');
 
       const emailPrompt = `Write a professional real estate inspection response email.
 
 Property: ${address || 'the subject property'}
-Written by: ${agent || 'the agent'}
+From: ${agent || 'the agent'}
 To: ${recipient || 'the recipient'}
 ${context ? 'Context: ' + context : ''}
 
-Issues:
+Inspection findings:
 ${issueList}
 
-Email requirements:
+Write a professional email that:
 - First line: Subject: Inspection Response — ${address || 'Property'}
 - Professional greeting to ${recipient || 'the recipient'}
-- Brief intro
-- Each issue as a bolded heading (**Issue Name**) with 1-2 sentence explanation
-- Note photos are attached for each item
-- Request remediation before closing or discuss seller credit
-- Professional sign-off as ${agent || 'the agent'}`;
+- States the purpose clearly
+- References the attached repair summary table
+- Highlights the most critical items briefly
+- Requests remediation or seller credit discussion before closing
+- Professional sign-off as ${agent || 'the agent'}
+Keep it concise — the table has the details.`;
 
       const emailText = await callAI([{ role: 'user', content: emailPrompt }]);
       currentEmailText = emailText;
-      setStep(4, 'done');
+      setStep(3, 'done');
 
       await delay(200);
-      renderOutput(matched, emailText, address, agent, recipient);
+      renderOutput(findings, emailText, address, agent, recipient);
 
     } catch(e) {
-      errEl.textContent = 'Error: ' + e.message;
-      errEl.style.display = 'block';
+      document.getElementById('err-msg').textContent = 'Error: ' + e.message;
+      document.getElementById('err-msg').style.display = 'block';
       document.getElementById('analyze-btn').disabled = false;
       document.getElementById('progress-card').style.display = 'none';
     }
+  }
+
+  function parseCost(costStr) {
+    if (!costStr || costStr === 'NA' || costStr === 'N/A') return 0;
+    const nums = costStr.replace(/[^0-9–\-]/g, '').split(/[–\-]/);
+    const vals = nums.map(n => parseInt(n)).filter(n => !isNaN(n));
+    if (!vals.length) return 0;
+    return vals.reduce((a,b) => a+b, 0) / vals.length;
   }
 
   function renderOutput(findings, email, address, agent, recipient) {
     const critical = findings.filter(f=>f.severity==='critical').length;
     const major = findings.filter(f=>f.severity==='major').length;
     const minor = findings.filter(f=>f.severity==='minor').length;
-    document.getElementById('findings-summary').textContent = `Found ${findings.length} issue${findings.length!==1?'s':''}: ${critical} critical · ${major} major · ${minor} minor`;
+    document.getElementById('findings-summary').textContent = `${findings.length} issue${findings.length!==1?'s':''} identified — ${critical} critical · ${major} major · ${minor} minor`;
 
-    const grid = document.getElementById('findings-grid'); grid.innerHTML = '';
+    const tbody = document.getElementById('findings-tbody');
+    tbody.innerHTML = '';
+    let totalMin = 0, totalMax = 0;
+
     findings.forEach(f => {
       const sevClass = f.severity==='critical'?'sev-critical':f.severity==='major'?'sev-major':'sev-minor';
-      const card = document.createElement('div'); card.className = 'finding-card';
-      card.innerHTML = `<div class="finding-top"><div class="finding-sev ${sevClass}">${esc(f.severity)}</div><div class="finding-title">${esc(f.title)}</div>${f.location?`<div class="finding-loc">${esc(f.location)}</div>`:''}</div><div class="finding-reason">${esc(f.reason)}</div>${f.images&&f.images.length?`<div class="finding-imgs-wrap">${f.images.map(img=>`<img src="${img.dataUrl}" alt="${esc(f.title)}" />`).join('')}</div>`:''}`;
-      grid.appendChild(card);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${esc(f.category)}</strong></td>
+        <td>${esc(f.issues).replace(/\n/g,'<br/>')}</td>
+        <td>${esc(f.recommendation)}</td>
+        <td>${esc(f.cost)}</td>
+        <td><span class="sev-badge ${sevClass}">${esc(f.severity)}</span></td>
+      `;
+      tbody.appendChild(tr);
+
+      if (f.cost && f.cost !== 'NA' && f.cost !== 'N/A') {
+        const costStr = f.cost.replace(/[^0-9–\-]/g,'').split(/[–\-]/);
+        const nums = costStr.map(n=>parseInt(n)).filter(n=>!isNaN(n));
+        if (nums.length >= 2) { totalMin += nums[0]; totalMax += nums[1]; }
+        else if (nums.length === 1) { totalMin += nums[0]; totalMax += nums[0]; }
+      }
     });
 
+    const totalEl = document.getElementById('cost-total');
+    if (totalMin > 0) {
+      const fmt = n => '$' + n.toLocaleString();
+      totalEl.innerHTML = `<span>Estimated total repair cost</span><strong>${totalMin === totalMax ? fmt(totalMin) : fmt(totalMin) + ' – ' + fmt(totalMax)}</strong>`;
+    } else {
+      totalEl.style.display = 'none';
+    }
+
     const subjectMatch = email.match(/^Subject:\s*(.+)/im);
-    const subject = subjectMatch ? subjectMatch[1].trim() : `Inspection Response`;
+    const subject = subjectMatch ? subjectMatch[1].trim() : 'Inspection Response';
     const bodyText = email.replace(/^Subject:\s*.+\n?/im,'').trim();
 
     document.getElementById('email-meta').innerHTML = `
@@ -416,42 +472,103 @@ Email requirements:
 
     document.getElementById('email-body').innerHTML = bodyText.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br/>');
 
-    const photosSection = document.getElementById('email-photos');
-    const withPhotos = findings.filter(f=>f.images&&f.images.length>0);
-    if (withPhotos.length) {
-      photosSection.innerHTML = `<div style="font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Attached Photos</div>`;
-      withPhotos.forEach(f => {
-        const grp = document.createElement('div'); grp.className = 'photo-group';
-        grp.innerHTML = `<div class="photo-group-label">${esc(f.title)}</div><div class="photo-group-imgs">${f.images.map(img=>`<img src="${img.dataUrl}" alt="${esc(f.title)}" />`).join('')}</div>`;
-        photosSection.appendChild(grp);
-      });
-    } else { photosSection.style.display = 'none'; }
-
     document.getElementById('progress-card').style.display = 'none';
     document.getElementById('output-section').style.display = 'block';
     document.getElementById('analyze-btn').disabled = false;
     document.getElementById('output-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function copyEmail() {
-    const body = document.getElementById('email-body').innerText;
-    const subjectEl = document.querySelector('.email-meta-row strong');
-    navigator.clipboard.writeText(body).then(() => {
+  function copyTable() {
+    const rows = [['Category','Issues','Recommendation','Est. Cost','Priority']];
+    tableData.forEach(f => rows.push([f.category, f.issues, f.recommendation, f.cost, f.severity]));
+    const tsv = rows.map(r => r.join('\t')).join('\n');
+    navigator.clipboard.writeText(tsv).then(() => {
       const btn = event.target; btn.textContent = 'Copied!';
-      setTimeout(() => btn.textContent = 'Copy Text', 2000);
+      setTimeout(() => btn.textContent = 'Copy Table', 2000);
     });
   }
 
+  function copyEmail() {
+    const body = document.getElementById('email-body').innerText;
+    navigator.clipboard.writeText(body).then(() => {
+      const btn = event.target; btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy Email', 2000);
+    });
+  }
+
+  // ── Table editing ──
+  let tableEditMode = false;
+  function toggleTableEdit() {
+    tableEditMode = !tableEditMode;
+    const table = document.getElementById('findings-table');
+    const btn = document.getElementById('edit-table-btn');
+    const hint = document.getElementById('table-edit-hint');
+
+    if (tableEditMode) {
+      // Make all data cells editable except the severity badge column
+      table.classList.add('edit-mode');
+      table.querySelectorAll('tbody td').forEach((td, idx) => {
+        const col = idx % 5; // 5 columns: cat, issues, rec, cost, priority
+        if (col < 4) { // don't make the badge column editable
+          td.contentEditable = 'true';
+        }
+      });
+      btn.textContent = '💾 Save';
+      btn.classList.add('save');
+      hint.classList.add('visible');
+    } else {
+      // Save: collect updated data back into tableData
+      table.classList.remove('edit-mode');
+      table.querySelectorAll('tbody tr').forEach((tr, rowIdx) => {
+        const cells = tr.querySelectorAll('td');
+        if (tableData[rowIdx]) {
+          tableData[rowIdx].category = cells[0].innerText.trim();
+          tableData[rowIdx].issues = cells[1].innerText.trim();
+          tableData[rowIdx].recommendation = cells[2].innerText.trim();
+          tableData[rowIdx].cost = cells[3].innerText.trim();
+        }
+        cells.forEach(td => td.contentEditable = 'false');
+      });
+      btn.textContent = '✏️ Edit Table';
+      btn.classList.remove('save');
+      hint.classList.remove('visible');
+    }
+  }
+
+  // ── Email editing ──
+  let emailEditMode = false;
+  function toggleEmailEdit() {
+    emailEditMode = !emailEditMode;
+    const emailBody = document.getElementById('email-body');
+    const btn = document.getElementById('edit-email-btn');
+    const hint = document.getElementById('email-edit-hint');
+
+    if (emailEditMode) {
+      emailBody.contentEditable = 'true';
+      emailBody.classList.add('edit-mode');
+      emailBody.focus();
+      btn.textContent = '💾 Save';
+      btn.classList.add('save');
+      hint.classList.add('visible');
+    } else {
+      emailBody.contentEditable = 'false';
+      emailBody.classList.remove('edit-mode');
+      currentEmailText = emailBody.innerText;
+      btn.textContent = '✏️ Edit Email';
+      btn.classList.remove('save');
+      hint.classList.remove('visible');
+    }
+  }
+
   function resetAll() {
-    uploadedImages = []; pdfText = ''; currentEmailText = '';
+    pdfText = ''; currentEmailText = ''; tableData = [];
     ['address','agent','recipient','context','report-text'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
     document.getElementById('pdf-chip-wrap').innerHTML = '';
-    document.getElementById('img-previews').innerHTML = '';
     document.getElementById('progress-card').style.display = 'none';
     document.getElementById('output-section').style.display = 'none';
     document.getElementById('analyze-btn').disabled = false;
     document.getElementById('err-msg').style.display = 'none';
-    ['1','2','3','4'].forEach(n => { document.getElementById('ps'+n).className='p-step'; });
+    ['1','2','3'].forEach(n => { document.getElementById('ps'+n).className='p-step'; });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
