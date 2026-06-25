@@ -48,8 +48,9 @@
   .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: var(--cream); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
   .main { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  .form-grid.two-col { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 640px) { .form-grid, .form-grid.two-col { grid-template-columns: 1fr; } }
 
   .section { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.25rem; }
   .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
@@ -103,12 +104,17 @@
   .tb-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--ink2); background: white; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 5px 12px; cursor: pointer; transition: background .12s; }
   .tb-btn:hover { background: var(--cream); }
 
-  .findings-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .findings-table th { background: var(--ink); color: var(--cream); font-weight: 500; padding: 10px 14px; text-align: left; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
-  .findings-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--ink2); line-height: 1.6; }
+  .findings-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  .findings-table th { background: var(--ink); color: var(--cream); font-weight: 500; padding: 10px 10px; text-align: left; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+  .findings-table td { padding: 10px 10px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--ink2); line-height: 1.5; font-size: 13px; word-wrap: break-word; }
   .findings-table tr:last-child td { border-bottom: none; }
   .findings-table tr:hover td { background: var(--cream); }
   .findings-table td:nth-child(4) { font-weight: 600; color: var(--green); white-space: nowrap; }
+  .findings-table col.col-cat { width: 13%; }
+  .findings-table col.col-issues { width: 32%; }
+  .findings-table col.col-rec { width: 30%; }
+  .findings-table col.col-cost { width: 13%; }
+  .findings-table col.col-pri { width: 12%; }
 
   .sev-badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 20px; white-space: nowrap; }
   .sev-critical { background: var(--red-bg); color: var(--red); }
@@ -133,6 +139,15 @@
   .reset-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink3); background: none; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 8px 18px; cursor: pointer; }
   .reset-btn:hover { background: var(--cream); }
   footer { text-align: center; padding: 2rem; font-size: 12px; color: var(--ink3); border-top: 1px solid var(--border); margin-top: 2rem; }
+
+  .edit-mode td[contenteditable="true"] { background: #fffbf0; outline: 1.5px solid var(--gold); border-radius: 4px; cursor: text; }
+  .edit-mode td[contenteditable="true"]:focus { background: white; outline: 2px solid var(--gold); }
+  .tb-btn.editing { background: var(--gold-light); border-color: var(--gold); color: var(--ink); }
+  .tb-btn.save { background: var(--ink); color: white; border-color: var(--ink); }
+  .tb-btn.save:hover { background: var(--ink2); }
+  .edit-hint { font-size: 11px; color: var(--gold); margin-top: 6px; display: none; }
+  .edit-hint.visible { display: block; }
+  .email-body.edit-mode { background: #fffbf0; outline: 1.5px solid var(--gold); border-radius: 4px; }
 
   @media print {
     header, .hero, .form-section, .analyze-btn, .reset-row, footer, .tb-btn, .toolbar-actions { display: none !important; }
@@ -169,15 +184,20 @@
 
 <div class="main">
   <div class="form-section">
-    <div class="form-grid">
-      <div class="section">
+    <div class="form-grid" id="form-grid">
+      <div class="section" id="details-panel" style="display:none">
         <div class="section-head">
           <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-          <div class="section-head-text"><h3>Property & Parties</h3><p>Who is this report for?</p></div>
+          <div class="section-head-text"><h3>Extracted from Report</h3><p>Edit if anything looks wrong</p></div>
         </div>
-        <div class="field"><label>Property Address</label><input type="text" id="address" placeholder="e.g. 25542 SE 41st Court, Sammamish 98029" /></div>
-        <div class="field"><label>From (Agent Name)</label><input type="text" id="agent" placeholder="e.g. Karishma Kiri" /></div>
-        <div class="field"><label>To (Recipient Name)</label><input type="text" id="recipient" placeholder="e.g. Yu Cai" /></div>
+        <div class="field">
+          <label>Property Address</label>
+          <input type="text" id="address" placeholder="Not found — enter manually" />
+        </div>
+        <div class="field">
+          <label>Client Name</label>
+          <input type="text" id="recipient" placeholder="Not found — enter manually" />
+        </div>
         <div class="field"><label>Extra Context (optional)</label><textarea id="context" rows="2" placeholder="e.g. Buyer requesting seller credit. Closing June 15th."></textarea></div>
       </div>
 
@@ -224,12 +244,17 @@
       <div class="table-toolbar">
         <span>Issues Found</span>
         <div class="toolbar-actions">
+          <button class="tb-btn" id="edit-table-btn" onclick="toggleTableEdit()">✏️ Edit Table</button>
           <button class="tb-btn" onclick="copyTable()">Copy Table</button>
           <button class="tb-btn" onclick="window.print()">Print / Save PDF</button>
         </div>
       </div>
-      <div style="overflow-x:auto">
+      <div class="edit-hint" id="table-edit-hint">Click any cell to edit. Click "Save" when done.</div>
+      <div>
         <table class="findings-table" id="findings-table">
+          <colgroup>
+            <col class="col-cat"/><col class="col-issues"/><col class="col-rec"/><col class="col-cost"/><col class="col-pri"/>
+          </colgroup>
           <thead>
             <tr>
               <th>Category</th>
@@ -253,9 +278,11 @@
       <div class="email-toolbar">
         <span>Email Draft</span>
         <div class="toolbar-actions">
+          <button class="tb-btn" id="edit-email-btn" onclick="toggleEmailEdit()">✏️ Edit Email</button>
           <button class="tb-btn" onclick="copyEmail()">Copy Email</button>
         </div>
       </div>
+      <div class="edit-hint" id="email-edit-hint">Click anywhere in the email to edit. Click "Save" when done.</div>
       <div class="email-meta" id="email-meta"></div>
       <div class="email-body" id="email-body" contenteditable="true" spellcheck="true"></div>
     </div>
@@ -286,6 +313,9 @@
       if (!res.ok) throw new Error(data.error || 'Could not read PDF');
       pdfText = data.text;
       chipWrap.innerHTML = `<div class="file-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16h16V8z"/></svg>&nbsp;${esc(file.name)} (ready)<button onclick="removePdf()">x</button></div>`;
+      document.getElementById('details-panel').style.display = 'block';
+      document.getElementById('form-grid').classList.add('two-col');
+      autoFillFromReport(data.text);
     } catch(e) {
       chipWrap.innerHTML = '';
       document.getElementById('err-msg').textContent = 'PDF error: ' + e.message;
@@ -316,7 +346,6 @@
     if (!reportText) { errEl.textContent = 'Please upload or paste an inspection report.'; errEl.style.display = 'block'; return; }
 
     const address = document.getElementById('address').value.trim();
-    const agent = document.getElementById('agent').value.trim();
     const recipient = document.getElementById('recipient').value.trim();
     const context = document.getElementById('context').value.trim();
 
@@ -332,10 +361,10 @@
       const analysisPrompt = `You are a certified home inspector and real estate expert analyzing an inspection report for a real estate agent.
 
 Read the report and identify ALL issues. For each issue provide:
-- category: short category name (e.g. "Furnace", "Windows", "Plumbing", "Roof", "Electrical")
-- issues: detailed description of the problem(s) found. If multiple sub-issues, list them clearly.
-- recommendation: what should be done (e.g. "Ask seller for credit", "Seller to repair before closing", "Get contractor quote")
-- cost: a realistic single cost estimate as a string (e.g. "$3,000", "$1,500", "NA" if not applicable). Use a specific number based on typical contractor rates, not a wide range. Only use a range if genuinely uncertain (e.g. "$2,000–$3,000" max spread of 50%).
+- category: short category name (e.g. "Furnace", "Windows", "Plumbing")
+- issues: 1 sentence max. Be concise and specific (e.g. "Active leak under kitchen sink with cabinet water damage.")
+- recommendation: 1 short action phrase (e.g. "Seller to repair before closing" or "Request $3,000 credit")
+- cost: single realistic number (e.g. "$3,000"). No wide ranges. Use contractor averages. "NA" if not applicable.
 - severity: "critical", "major", or "minor"
 
 Return ONLY a valid JSON array, no markdown, no explanation:
@@ -361,8 +390,7 @@ ${reportText.slice(0, 8000)}`;
       const emailPrompt = `Write a professional real estate inspection response email.
 
 Property: ${address || 'the subject property'}
-From: ${agent || 'the agent'}
-To: ${recipient || 'the recipient'}
+To: ${recipient || 'the client'}
 ${context ? 'Context: ' + context : ''}
 
 Inspection findings:
@@ -370,12 +398,12 @@ ${issueList}
 
 Write a professional email that:
 - First line: Subject: Inspection Response — ${address || 'Property'}
-- Professional greeting to ${recipient || 'the recipient'}
+- Professional greeting to ${recipient || 'the client'}
 - States the purpose clearly
 - References the attached repair summary table
 - Highlights the most critical items briefly
 - Requests remediation or seller credit discussion before closing
-- Professional sign-off as ${agent || 'the agent'}
+- Professional sign-off (leave name as "[Agent Name]" for the agent to fill in)
 Keep it concise — the table has the details.`;
 
       const emailText = await callAI([{ role: 'user', content: emailPrompt }]);
@@ -401,7 +429,7 @@ Keep it concise — the table has the details.`;
     return vals.reduce((a,b) => a+b, 0) / vals.length;
   }
 
-  function renderOutput(findings, email, address, agent, recipient) {
+  function renderOutput(findings, email, address, recipient) {
     const critical = findings.filter(f=>f.severity==='critical').length;
     const major = findings.filter(f=>f.severity==='major').length;
     const minor = findings.filter(f=>f.severity==='minor').length;
@@ -446,7 +474,6 @@ Keep it concise — the table has the details.`;
     document.getElementById('email-meta').innerHTML = `
       <div class="email-meta-row"><strong>Subject</strong>${esc(subject)}</div>
       <div class="email-meta-row"><strong>To</strong>${esc(recipient||'—')}</div>
-      <div class="email-meta-row"><strong>From</strong>${esc(agent||'—')}</div>
       ${address?`<div class="email-meta-row"><strong>Property</strong>${esc(address)}</div>`:''}`;
 
     document.getElementById('email-body').innerHTML = bodyText.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br/>');
@@ -475,10 +502,103 @@ Keep it concise — the table has the details.`;
     });
   }
 
+  // ── Table editing ──
+  let tableEditMode = false;
+  function toggleTableEdit() {
+    tableEditMode = !tableEditMode;
+    const table = document.getElementById('findings-table');
+    const btn = document.getElementById('edit-table-btn');
+    const hint = document.getElementById('table-edit-hint');
+
+    if (tableEditMode) {
+      // Make all data cells editable except the severity badge column
+      table.classList.add('edit-mode');
+      table.querySelectorAll('tbody td').forEach((td, idx) => {
+        const col = idx % 5; // 5 columns: cat, issues, rec, cost, priority
+        if (col < 4) { // don't make the badge column editable
+          td.contentEditable = 'true';
+        }
+      });
+      btn.textContent = '💾 Save';
+      btn.classList.add('save');
+      hint.classList.add('visible');
+    } else {
+      // Save: collect updated data back into tableData
+      table.classList.remove('edit-mode');
+      table.querySelectorAll('tbody tr').forEach((tr, rowIdx) => {
+        const cells = tr.querySelectorAll('td');
+        if (tableData[rowIdx]) {
+          tableData[rowIdx].category = cells[0].innerText.trim();
+          tableData[rowIdx].issues = cells[1].innerText.trim();
+          tableData[rowIdx].recommendation = cells[2].innerText.trim();
+          tableData[rowIdx].cost = cells[3].innerText.trim();
+        }
+        cells.forEach(td => td.contentEditable = 'false');
+      });
+      btn.textContent = '✏️ Edit Table';
+      btn.classList.remove('save');
+      hint.classList.remove('visible');
+    }
+  }
+
+  // ── Email editing ──
+  let emailEditMode = false;
+  function toggleEmailEdit() {
+    emailEditMode = !emailEditMode;
+    const emailBody = document.getElementById('email-body');
+    const btn = document.getElementById('edit-email-btn');
+    const hint = document.getElementById('email-edit-hint');
+
+    if (emailEditMode) {
+      emailBody.contentEditable = 'true';
+      emailBody.classList.add('edit-mode');
+      emailBody.focus();
+      btn.textContent = '💾 Save';
+      btn.classList.add('save');
+      hint.classList.add('visible');
+    } else {
+      emailBody.contentEditable = 'false';
+      emailBody.classList.remove('edit-mode');
+      currentEmailText = emailBody.innerText;
+      btn.textContent = '✏️ Edit Email';
+      btn.classList.remove('save');
+      hint.classList.remove('visible');
+    }
+  }
+
+  async function autoFillFromReport(text) {
+    
+    
+    try {
+      const extractPrompt = `Read this inspection report and extract ONLY these two things. Return ONLY valid JSON, no markdown:
+{"address":"full property address being inspected","client":"name of the client, buyer, or homeowner"}
+Use empty string "" if not found.
+
+Report excerpt:
+${text.slice(0, 2000)}`;
+      const res = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: extractPrompt }] })
+      });
+      const data = await res.json();
+      const info = JSON.parse(data.text.replace(/```json|```/g,'').trim());
+      if (info.address) { document.getElementById('address').value = info.address;  }
+      else {  }
+      if (info.client) { document.getElementById('recipient').value = info.client;  }
+      else {  }
+    } catch(e) {
+      
+      
+    }
+  }
+
   function resetAll() {
     pdfText = ''; currentEmailText = ''; tableData = [];
-    ['address','agent','recipient','context','report-text'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+    ['address','recipient','context','report-text'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
     document.getElementById('pdf-chip-wrap').innerHTML = '';
+    document.getElementById('details-panel').style.display = 'none';
+    document.getElementById('form-grid').classList.remove('two-col');
     document.getElementById('progress-card').style.display = 'none';
     document.getElementById('output-section').style.display = 'none';
     document.getElementById('analyze-btn').disabled = false;
