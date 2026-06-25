@@ -411,7 +411,7 @@ Keep it concise — the table has the details.`;
       setStep(3, 'done');
 
       await delay(200);
-      renderOutput(findings, emailText, address, agent, recipient);
+      renderOutput(findings, emailText, address, recipient);
 
     } catch(e) {
       document.getElementById('err-msg').textContent = 'Error: ' + e.message;
